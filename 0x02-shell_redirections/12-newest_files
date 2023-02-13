@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -Aalt
+ls -Alt
