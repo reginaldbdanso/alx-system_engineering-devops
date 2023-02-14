@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -R | grep -i '\.gif$' | sort -f | cut -f 1 -d '.' | uniq
+find . -type f -name "*.gif" | rev | cut -d '/' -f1 | cut -d '.' -f2,3 | rev | sort -Vf
