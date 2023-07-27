@@ -5,7 +5,7 @@
 
 i=1
 j=0
-while [ $j -lt 12 ]
+while [ $j -le 12 ]
 do
     echo "Hour: $j"
     while [ $i -le 59 ]
