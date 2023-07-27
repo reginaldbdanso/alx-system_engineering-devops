@@ -4,7 +4,7 @@
 # In a list format
 # Where only the part of the name after the first dash is displayed
 
-LS="$(find . -type f | cut -d'-' -f2-)"
+LS="$(ls | cut -d'-' -f2-)"
 for i in $LS; 
 do
     echo "$i"
