@@ -2,4 +2,4 @@
 # displays best school 10 times using while loop
 # shellcheck disable=SC2009
 
-ps -aux -H -u | grep 'bash'
+ps -aux -H -u -x | grep 'bash'
