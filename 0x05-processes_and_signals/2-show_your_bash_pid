@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# displays best school 10 times using while loop
+# displays lines containing the bash word, thus allowing you to
+# easily get the PID of your Bash process.
 # shellcheck disable=SC2009
 
 ps -aux -H -u -x | grep 'bash'
