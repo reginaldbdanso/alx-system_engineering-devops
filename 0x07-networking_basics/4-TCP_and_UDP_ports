@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-# displays To infinity and beyond indefinitely.
+# displays listening ports:
+# That only shows listening sockets
+# That shows the PID and name of the program to which each socket belongs
 
-i=0
-while [ $i -lt 2 ]
-do
-    echo "To infinity and beyond"
-    sleep 2
-done
+netstat -l -p
