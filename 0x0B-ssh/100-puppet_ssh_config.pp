@@ -11,4 +11,3 @@ file_line { 'Use SSH Private Key':
   path   => '/etc/ssh/ssh_config',
   line   => 'IdentityFile ~/.ssh/school',
 }
-vi
