@@ -7,6 +7,11 @@ then
     apt-get update
     apt-get install -y nginx
 fi
+# Allow incoming traffic on port 80 (HTTP)
+ufw allow 'Nginx HTTP'
+
+# Append "Hello World!" to the default Nginx index.html file
+echo "Hello World!" >> /var/www/html/index.html
 
 # Use sed to replace the default server block with a new server block that includes a redirect rule for /redirect_me
 sed -i '/listen \[::\]:80 default_server;/a \\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=dQw4w9WgXcQ;\n\t}' /etc/nginx/sites-available/default
