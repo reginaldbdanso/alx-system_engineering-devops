@@ -6,6 +6,8 @@ sudo apt-get -y update
 # install nginx
 sudo apt-get -y install nginx
 
+sudo service nginx start
+
 # Create a default configuration file with "Hello World!" content
 echo "server {
     listen 80 default_server;
