@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# congifures your Nginx server to have a custom 404 page that 
+# contains the string Ceci n'est pas une page
+
+# Install nginx if it is not already installed
+if ! command -v nginx &> /dev/null
+then
+    apt-get update
+    apt-get install -y nginx
+fi
+# Allow incoming traffic on port 80 (HTTP)
+ufw allow 'Nginx HTTP'
+
+# Append "Hello World!" to the default Nginx index.html file
+#echo "Hello World!" >> /var/www/html/index.html
+
+# Create the custom 404 error page
+echo "Ceci n'est pas une page" > /usr/share/nginx/html/404.html
+
+# Configure Nginx to use the custom 404 error page
+CONFIG_FILE="/etc/nginx/sites-available/default"
+# sed -i 's/error_page 404 \/404.html;/error_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\tinternal;\n\t}/' $CONFIG_FILE
+# sed -i 's/listen \[::\]:80 default_server;/a /error_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\tinternal;\n\t}/' $CONFIG_FILE
+sed -i 's/listen \[::\]:80 default_server;/&\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\tinternal;\n\t}/' $CONFIG_FILE
+# '/listen \[::\]:80 default_server;/a \\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=dQw4w9WgXcQ;\n\t}'
+# Restart Nginx to apply the changes
+service nginx restart
