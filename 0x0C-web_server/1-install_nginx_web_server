@@ -12,5 +12,5 @@ service nginx start
 ufw allow 'Nginx HTTP'
 # write the string "Hello World!" to the file
 echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
-
+# restart nginx service
 service nginx restart
