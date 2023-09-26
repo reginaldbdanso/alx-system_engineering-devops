@@ -1,21 +1,6 @@
-# Installs a Nginx server with puppet
+# Installs a Nginx server
 
-exec {'install_nginx':
+exec {'install':
   provider => shell,
-  command  => 'sudo apt-get -y update ; sudo apt-get -y install nginx ',
-}
-
-exec {'Append_hello_world':
-  provider => shell,
-  command  => 'echo "Hello World!" >> /var/www/html/index.html ;'
-}
-
-exec {'Add_redirect_rule':
-  provider => shell,
-  command  => 'sed -i '/listen \[::\]:80 default_server;/a \\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=dQw4w9WgXcQ;\n\t}' /etc/nginx/sites-available/default ;'
-}
-
-exec {'Restart_nginx':
-  provider => shell,
-  command  => 'sudo service nginx restart',
+  command  => 'sudo apt-get -y update ; sudo apt-get -y install nginx ; echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html ; sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Tolulope05 permanent;/" /etc/nginx/sites-available/default ; sudo service nginx start',
 }
