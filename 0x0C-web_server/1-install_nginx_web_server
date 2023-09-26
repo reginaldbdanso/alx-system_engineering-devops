@@ -2,12 +2,12 @@
 # installs nginx on server
 
 # update package list
-sudo apt-get -y update
+apt-get -y update
 # install nginx
-sudo apt-get -y install nginx
+apt-get -y install nginx
 
 # start nginx
-sudo service nginx start
+service nginx start
 # allow incoming HTTP traffic on port 80
 ufw allow 'Nginx HTTP'
 # write the string "Hello World!" to the file
