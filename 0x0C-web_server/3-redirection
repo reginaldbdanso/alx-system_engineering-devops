@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Configure your Nginx server so that /redirect_me is redirecting to another page.
+
+# Install nginx if it is not already installed
+if ! command -v nginx &> /dev/null
+then
+    apt-get update
+    apt-get install -y nginx
+fi
+
+# Use sed to replace the default server block with a new server block that includes a redirect rule for /redirect_me
+sed -i '/listen \[::\]:80 default_server;/a \\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=dQw4w9WgXcQ;\n\t}' /etc/nginx/sites-available/default
+
+# Restart Nginx to apply the changes
+service nginx restart
