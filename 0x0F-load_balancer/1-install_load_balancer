@@ -10,6 +10,8 @@ sudo cat <<EOF > /etc/haproxy/haproxy.cfg
 frontend http-in
     bind *:80
     default_backend servers
+    mode http
+
 
 backend servers
     balance roundrobin
