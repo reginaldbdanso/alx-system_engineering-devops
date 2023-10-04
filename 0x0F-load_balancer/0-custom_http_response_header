@@ -2,11 +2,9 @@
 # configure web-02 to be identical to web-01, add a custom HTTP header
 
 # Install nginx if it is not already installed
-if ! command -v nginx &> /dev/null
-then
-    apt-get update
-    apt-get install -y nginx
-fi
+apt-get update
+apt-get install -y nginx
+
 # allow incoming HTTP traffic on port 80
 ufw allow 'Nginx HTTP'
 # write the string "Hello World!" to the file
