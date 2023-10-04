@@ -18,7 +18,9 @@ echo "Ceci n'est pas une page" > 404.html
 sudo mv 404.html /var/www/html
 # Configure Nginx to use the custom 404 error page
 CONFIG_FILE="/etc/nginx/sites-available/default"
-sed -i 's/listen \[::\]:80 default_server;/&\n\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\tinternal;\n\t}/' $CONFIG_FILE
+if ! grep -q "error_page 404 /404.html;" $CONFIG_FILE; then
+    sed -i 's/listen \[::\]:80 default_server;/&\n\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\tinternal;\n\t}/' $CONFIG_FILE
+fi
 # Add custom HTTP response header
 # sudo sed -i "/^server {/a \\\tadd_header X-Served-By \$hostname;" /etc/nginx/sites-available/default
 sudo sed -i -e '/^server {/!{a \\\tadd_header X-Served-By \$HOSTNAME;\n}}' /etc/nginx/sites-available/default
