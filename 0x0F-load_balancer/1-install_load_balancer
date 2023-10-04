@@ -20,7 +20,8 @@ backend servers
 EOF
 
 # Enable HAproxy init script
-sudo sed -i '/#EXTRAOPTS="-de -m 16"/a ENABLED=1' /etc/default/haproxy
-
+if ! grep -q "ENABLED=1" /etc/default/haproxy; then
+    sudo sed -i '/#EXTRAOPTS="-de -m 16"/a ENABLED=1' /etc/default/haproxy
+fi
 # Restart HAproxy
 sudo systemctl restart haproxy
