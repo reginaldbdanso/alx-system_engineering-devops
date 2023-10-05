@@ -8,18 +8,20 @@ apt-get update -y
 apt-get install -y haproxy=2.8.\*
 
 # Modify configuration file
-cat <<EOF >> /etc/haproxy/haproxy.cfg
-frontend my_frontend
-    listen http-in
-    bind *:80
-    default_backend servers
-    mode http
-    balance roundrobin
+if grep -q "frontend" /etc/haproxy/haproxy.cfg; then
+    cat <<EOF >> /etc/haproxy/haproxy.cfg
+    frontend my_frontend
+        listen http-in
+        bind *:80
+        default_backend servers
+        mode http
+        balance roundrobin
 
-backend servers
-    server 252133-web-01 34.232.68.72:80 check
-    server 252133-web-02 52.90.13.69:80 check
+    backend servers
+        server 252133-web-01 34.232.68.72:80 check
+        server 252133-web-02 52.90.13.69:80 check
 EOF
+fi
 
 # Enable HAproxy init script
 if ! grep -q "ENABLED=1" /etc/default/haproxy; then
