@@ -2,30 +2,52 @@
 # Install and configure HAproxy on lb-01 server.
 
 # Install HAproxy
-apt-get install -y software-properties-common
-add-apt-repository -y ppa:vbernat/haproxy-2.8
-apt-get update -y
-apt-get install -y haproxy=2.8.\*
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository -y ppa:vbernat/haproxy-2.8
+sudo apt-get update -y
+sudo apt-get install -y haproxy=2.8.\*
 
+# service haproxy start
 # Modify configuration file
-if grep -q "frontend" /etc/haproxy/haproxy.cfg; then
-    cat <<EOF >> /etc/haproxy/haproxy.cfg
-    frontend my_frontend
-        listen http-in
-        bind *:80
-        default_backend servers
-        mode http
-        balance roundrobin
+# if grep -q "frontend my_frontend" /etc/haproxy/haproxy.cfg; then
+#     cat <<EOF >> /etc/haproxy/haproxy.cfg
+#     frontend my_frontend
+#         listen http-in
+#         bind *:80
+#         default_backend servers
+#         mode http
+#         balance roundrobin
 
-    backend servers
-        server 252133-web-01 34.232.68.72:80 check
-        server 252133-web-02 52.90.13.69:80 check
-EOF
+#     backend servers
+#         server 252133-web-01 34.232.68.72:80 check
+#         server 252133-web-02 52.90.13.69:80 check
+# EOF
+# fi
+
+if grep -q "listen http-in" /etc/haproxy/haproxy.cfg; then
+    echo "listen http-in" >> /etc/haproxy/haproxy.cfg
 fi
+if grep -q "bind *:80" /etc/haproxy/haproxy.cfg; then
+    echo "bind *:80" >> /etc/haproxy/haproxy.cfg
+fi
+if grep -q "mode http" /etc/haproxy/haproxy.cfg; then
+    echo "mode http" >> /etc/haproxy/haproxy.cfg
+fi
+
+if grep -q "balance roundrobin" /etc/haproxy/haproxy.cfg; then
+    echo "balance roundrobin" >> /etc/haproxy/haproxy.cfg
+fi
+if grep -q "server 252133-web-01 34.232.68.72:80 check" /etc/haproxy/haproxy.cfg; then
+    echo "server 252133-web-01 34.232.68.72:80 check" >> /etc/haproxy/haproxy.cfg
+fi
+if grep -q "server 252133-web-02 52.90.13.69:80 check" /etc/haproxy/haproxy.cfg; then
+    echo "server 252133-web-02 52.90.13.69:80 check" >> /etc/haproxy/haproxy.cfg
+fi
+        
 
 # Enable HAproxy init script
 if ! grep -q "ENABLED=1" /etc/default/haproxy; then
     sudo sed -i '/#EXTRAOPTS="-de -m 16"/a ENABLED=1' /etc/default/haproxy
 fi
 # Restart HAproxy
-sudo systemctl restart haproxy
+sudo service haproxy restart
