@@ -27,7 +27,7 @@ sudo apt-get install -y haproxy=2.8.\*
 if ! grep -q "listen http-in" /etc/haproxy/haproxy.cfg; then
     echo "listen http-in" >> /etc/haproxy/haproxy.cfg
 fi
-if ! grep -q "bind *:80" /etc/haproxy/haproxy.cfg; then
+if ! grep -q "bind \*:80" /etc/haproxy/haproxy.cfg; then
     echo "bind *:80" >> /etc/haproxy/haproxy.cfg
 fi
 if ! grep -q "mode http" /etc/haproxy/haproxy.cfg; then
