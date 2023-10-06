@@ -8,7 +8,7 @@ function audit_subdomain {
   local record_type
   record_type=$(dig +short $subdomain.$domain | awk '{print $1}')
   local destination
-  destination=$(dig +short $subdomain.$domain | awk '{print $2}')
+  destination=$(dig +short $subdomain.$domain | awk '{print $1}')
   echo "The subdomain $subdomain is a $record_type record and points to $destination"
 }
 
