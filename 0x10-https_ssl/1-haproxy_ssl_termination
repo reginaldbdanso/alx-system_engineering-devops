@@ -32,12 +32,15 @@ defaults
         errorfile 502 /etc/haproxy/errors/502.http
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
-frontend ssl-frontend
+frontend no-ssl-frontend
         bind *:80
-        bind *:443 ssl crt /etc/letsencrypt/live/reginaldbdee.tech/fullchain.pem
-        reqadd X-Forwarded-Proto:\ https
         mode http
-        balance roundrobin
+        http-request add-header X-Forwarded-Proto http
+        default_backend servers
+
+frontend ssl-frontend
+        bind *:443 ssl crt /etc/letsencrypt/live/reginaldbdee.tech/newkey.pem
+        http-request add-header X-Forwarded-Proto https
         default_backend servers
 
 backend servers
