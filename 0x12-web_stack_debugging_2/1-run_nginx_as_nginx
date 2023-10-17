@@ -9,6 +9,15 @@ apt-get install -y nginx
 # Stop the Nginx service
 service nginx stop
 
+# Check if the "nginx" user exists
+if id "nginx" &>/dev/null; then
+  echo "User 'nginx' already exists."
+else
+  # Create the "nginx" user
+  sudo adduser nginx
+  echo "User 'nginx' has been created."
+fi
+
 # Change the user and group that Nginx runs as to 'nginx'
 sed -i 's/user www-data;/user nginx;/' /etc/nginx/nginx.conf
 
