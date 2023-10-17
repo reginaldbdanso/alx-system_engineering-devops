@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# configure a container to run Nginx as the "nginx" user,
+# listening on port 8080.
+
+# Update the package list and install Nginx
+apt-get update
+apt-get install -y nginx
+
+# Stop the Nginx service
+service nginx stop
+
+# Change the user and group that Nginx runs as to 'nginx'
+sed -i 's/user www-data;/user nginx;/' /etc/nginx/nginx.conf
+
+# Change the listening port to 8080
+sed -i 's/listen 80 default_server;/listen 8080 default_server;/' /etc/nginx/sites-available/default
+
+# Start the Nginx service
+service nginx start
+
+# Clean up
+apt-get clean
+
+# Display Nginx status
+service nginx status
+
+# Check Nginx listening on port 8080
+netstat -tuln | grep 8080
