@@ -27,8 +27,8 @@ sed -i 's/listen 80 default_server;/listen 8080 default_server;/' /etc/nginx/sit
 # Change the permission of nginx config file
 chmod 644 /etc/nginx/nginx.conf
 
-# Start the Nginx service
-service nginx start
+# Start the Nginx service as nginx user
+sudo -u nginx service nginx start
 
 # Clean up
 apt-get clean
