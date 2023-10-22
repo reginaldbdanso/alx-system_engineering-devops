@@ -18,6 +18,9 @@ else
   echo "User 'nginx' has been created."
 fi
 
+# Grant sudo permission to the nginx user
+sudo usermod -aG sudo nginx
+
 # Change the user and group that Nginx runs as to 'nginx'
 sed -i 's/user www-data;/user nginx;/' /etc/nginx/nginx.conf
 
@@ -28,7 +31,7 @@ sed -i 's/listen 80 default_server;/listen 8080 default_server;/' /etc/nginx/sit
 # chmod 644 /etc/nginx/nginx.conf
 
 # Start the Nginx service as nginx user
-service nginx start
+sudo -u nginx service nginx start
 
 # Clean up
 apt-get clean
