@@ -2,6 +2,9 @@
 # configure a container to run Nginx as the "nginx" user,
 # listening on port 8080.
 
+service apache2 stop 2&> /dev/null
+pkill apache2
+
 # Set the file permissions of the nginx configuration file to read
 # and write for the owner, and read-only for everyone else.
 chmod 644 /etc/nginx/nginx.conf
