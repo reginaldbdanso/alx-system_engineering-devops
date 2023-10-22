@@ -2,42 +2,17 @@
 # configure a container to run Nginx as the "nginx" user,
 # listening on port 8080.
 
-# Update the package list and install Nginx
-apt-get update
-apt-get install -y nginx
+# Set the file permissions of the nginx configuration file to read
+# and write for the owner, and read-only for everyone else.
+chmod 644 /etc/nginx/nginx.conf
 
-# Stop the Nginx service
-service nginx stop
+# Change the owner of the nginx configuration file to the nginx user.
+chown -R nginx /etc/nginx/nginx.conf
 
-# Check if the "nginx" user exists
-if id "nginx" &>/dev/null; then
-  echo "User 'nginx' already exists."
-else
-  # Create the "nginx" user
-  sudo adduser nginx
-  echo "User 'nginx' has been created."
-fi
+# Replace all occurrences of "80" with "8080" in the default
+# nginx configuration file.
+su - nginx -c "sed -i -e 's/80/8080/g' /etc/nginx/sites-available/default"
 
-# Grant sudo permission to the nginx user
-sudo usermod -aG sudo nginx
-
-# Change the user and group that Nginx runs as to 'nginx'
-sed -i 's/user www-data;/user nginx;/' /etc/nginx/nginx.conf
-
-# Change the listening port to 8080
-sed -i 's/listen 80 default_server;/listen 8080 default_server;/' /etc/nginx/sites-available/default
-
-# Change the permission of nginx config file
-# chmod 644 /etc/nginx/nginx.conf
-
-# Start the Nginx service as nginx user
-sudo -u nginx service nginx start
-
-# Clean up
-apt-get clean
-
-# Display Nginx status
-service nginx status
-
-# Check Nginx listening on port 8080
-netstat -tuln | grep 8080
+# Restart the nginx service as the nginx user, and redirect any error
+# messages to /dev/null.
+su - nginx -c "service nginx restart" 2&> /dev/null
